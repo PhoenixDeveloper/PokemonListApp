@@ -25,9 +25,9 @@ class DetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        labelNameView.text = ViewController.pokemonList[ViewController.selectedPokemonId].name
-        labelWeightView.text = "\(ViewController.pokemonList[ViewController.selectedPokemonId].weight)"
-        if let data = try? Data(contentsOf: URL(string: ViewController.pokemonList[ViewController.selectedPokemonId].urlSprite)!)
+        labelNameView.text = AppModel.pokemonList[ViewController.selectedPokemonId].name
+        labelWeightView.text = "\(AppModel.pokemonList[ViewController.selectedPokemonId].weight)"
+        if let data = try? Data(contentsOf: URL(string: AppModel.pokemonList[ViewController.selectedPokemonId].urlSprite)!)
         {
             imageView.image = UIImage(data: data)
         }
