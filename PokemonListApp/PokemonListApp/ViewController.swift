@@ -11,10 +11,12 @@ import UIKit
 class Pokemon {
     var name : String
     var urlSprite : String
+    var weight : Int64
     
-    init(name : String, urlSprite: String) {
+    init(name : String, urlSprite: String, weight: Int64) {
         self.name = name
         self.urlSprite = urlSprite
+        self.weight = weight
     }
 }
 
@@ -22,9 +24,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var pokemonListTableView = UITableView()
     var offset = 0
-    var pokemonList : [Pokemon] = []
+    public static var pokemonList : [Pokemon] = []
     let identifire = "MyCell"
     var isDataLoading : Bool = false
+    public static var selectedPokemonId : Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +44,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
                     as! [String : AnyObject]
                 
-                let countLoad = (json["count"] as! Int - self!.pokemonList.count > 20) ? 20 : (json["count"] as! Int - self!.pokemonList.count)
+                let countLoad = (json["count"] as! Int - ViewController.pokemonList.count > 20) ? 20 : (json["count"] as! Int - ViewController.pokemonList.count)
                 
                 if let bufferPokemonList = json["results"] as? NSMutableArray {
                     for index in 0..<countLoad {
@@ -54,12 +57,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                     as! [String : AnyObject]
                                 
                                 var urlSprite : String = ""
+                                let weight : Int64 = jsonDetails["weight"] as! Int64
                                 
                                 if let sprites = jsonDetails["sprites"] {
                                     urlSprite = sprites["back_default"] as! String
                                 }
                                 
-                                self?.pokemonList.append(Pokemon(name: (pokemon["name"] as! String), urlSprite: urlSprite))
+                                ViewController.pokemonList.append(Pokemon(name: (pokemon["name"] as! String), urlSprite: urlSprite, weight: weight))
                                 
                                 if (index == countLoad-1 && self!.offset == 0) {
                                     self!.createTable()
@@ -105,20 +109,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemonList.count
+        return ViewController.pokemonList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: identifire, for: indexPath)
         
-        cell.textLabel?.text = "\(pokemonList[indexPath.row].name)"
-        if let data = try? Data(contentsOf: URL(string: pokemonList[indexPath.row].urlSprite)!)
+        cell.textLabel?.text = "\(ViewController.pokemonList[indexPath.row].name)"
+        if let data = try? Data(contentsOf: URL(string: ViewController.pokemonList[indexPath.row].urlSprite)!)
         {
             cell.imageView?.image = UIImage(data: data)
         }
-        cell.accessoryType = .detailButton
+        cell.accessoryType = .disclosureIndicator
         
-        if indexPath.row == pokemonList.count - 1 { // last cell
+        if indexPath.row == ViewController.pokemonList.count - 1 { // last cell
             if offset != 960 { // more items to fetch
                 offset += 20
                 loadData() // increment 'fromIndex' by 20 before server call
@@ -145,6 +149,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 loadData()
             }
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+        
+        ViewController.selectedPokemonId = indexPath.row
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
