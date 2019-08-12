@@ -24,10 +24,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var offset = 0
     var pokemonList : [Pokemon] = []
     let identifire = "MyCell"
+    var isDataLoading : Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadData()
+    }
+    
+    func loadData() {
         let urlString = "https://pokeapi.co/api/v2/pokemon?offset=\(offset)&limit=20"
         let url = URL.init(string: urlString)
         
@@ -36,9 +41,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 let json = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
                     as! [String : AnyObject]
                 
+                let countLoad = (json["count"] as! Int - self!.pokemonList.count > 20) ? 20 : (json["count"] as! Int - self!.pokemonList.count)
+                
                 if let bufferPokemonList = json["results"] as? NSMutableArray {
-                    self?.pokemonList.removeAll()
-                    for index in 0...19 {
+                    for index in 0..<countLoad {
                         let pokemon : NSMutableDictionary = bufferPokemonList[index] as! NSMutableDictionary
                         let urlStringDetails = pokemon["url"] as! String
                         let urlDetails = URL.init(string: urlStringDetails)
@@ -55,8 +61,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                                 
                                 self?.pokemonList.append(Pokemon(name: (pokemon["name"] as! String), urlSprite: urlSprite))
                                 
-                                if (index == 19) {
-                                    self?.createTable()
+                                if (index == countLoad-1 && self!.offset == 0) {
+                                    self!.createTable()
+                                }
+                                else {
+                                    self!.updateTable()
                                 }
                             }
                             catch let jsonErrorDetails {
@@ -77,21 +86,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func createTable() {
         
         DispatchQueue.main.async {
-        
-        self.pokemonListTableView = UITableView(frame: self.view.bounds, style: .plain)
-        self.pokemonListTableView.register(UITableViewCell.self, forCellReuseIdentifier: self.identifire)
-        self.pokemonListTableView.delegate = self
-        self.pokemonListTableView.dataSource = self
-        
-        self.pokemonListTableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        self.view.addSubview(self.pokemonListTableView)
+            self.pokemonListTableView = UITableView(frame: self.view.bounds, style: .plain)
+            self.pokemonListTableView.register(UITableViewCell.self, forCellReuseIdentifier: self.identifire)
+            self.pokemonListTableView.delegate = self
+            self.pokemonListTableView.dataSource = self
+            
+            self.pokemonListTableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            
+            self.view.addSubview(self.pokemonListTableView)
+        }
+    }
+    
+    func updateTable() {
+        DispatchQueue.main.async {
+            self.pokemonListTableView.reloadData()
         }
     }
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return pokemonList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,12 +118,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         cell.accessoryType = .detailButton
         
+        if indexPath.row == pokemonList.count - 1 { // last cell
+            if offset != 960 { // more items to fetch
+                offset += 20
+                loadData() // increment 'fromIndex' by 20 before server call
+            }
+        }
+        
         return cell
     }
     
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100.0
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        isDataLoading = false
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if ((pokemonListTableView.contentOffset.y + pokemonListTableView.frame.size.height) >= pokemonListTableView.contentSize.height)
+        {
+            if !isDataLoading{
+                isDataLoading = true
+                loadData()
+            }
+        }
     }
 }
 
