@@ -10,9 +10,11 @@ import UIKit
 
 class Pokemon {
     var name : String
+    var urlSprite : String
     
-    init(name : String) {
+    init(name : String, urlSprite: String) {
         self.name = name
+        self.urlSprite = urlSprite
     }
 }
 
@@ -37,12 +39,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 if let bufferPokemonList = json["results"] as? NSMutableArray {
                     self?.pokemonList.removeAll()
                     for index in 0...19 {
-                        var pokemon : NSMutableDictionary = bufferPokemonList[index] as! NSMutableDictionary
-                        self?.pokemonList.append(Pokemon(name: (pokemon["name"] as! String)))
+                        let pokemon : NSMutableDictionary = bufferPokemonList[index] as! NSMutableDictionary
+                        let urlStringDetails = pokemon["url"] as! String
+                        let urlDetails = URL.init(string: urlStringDetails)
+                        let taskDetail = URLSession.shared.dataTask(with: urlDetails!) { (dataDetails, responceDetails, errorDetails) in
+                            do {
+                                let jsonDetails = try JSONSerialization.jsonObject(with: dataDetails!, options: .mutableContainers)
+                                    as! [String : AnyObject]
+                                
+                                var urlSprite : String = ""
+                                
+                                if let sprites = jsonDetails["sprites"] {
+                                    urlSprite = sprites["back_default"] as! String
+                                }
+                                
+                                self?.pokemonList.append(Pokemon(name: (pokemon["name"] as! String), urlSprite: urlSprite))
+                                
+                                if (index == 19) {
+                                    self?.createTable()
+                                }
+                            }
+                            catch let jsonErrorDetails {
+                                print(jsonErrorDetails)
+                            }
+                        }
+                        taskDetail.resume()
                     }
                 }
-                
-                self?.createTable()
             }
             catch let jsonError {
                 print(jsonError)
@@ -75,6 +98,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: identifire, for: indexPath)
         
         cell.textLabel?.text = "\(pokemonList[indexPath.row].name)"
+        if let data = try? Data(contentsOf: URL(string: pokemonList[indexPath.row].urlSprite)!)
+        {
+            cell.imageView?.image = UIImage(data: data)
+        }
         cell.accessoryType = .detailButton
         
         return cell
