@@ -9,5 +9,5 @@
 import Foundation
 
 class AppModel {
-    public static var pokemonList : [Pokemon] = []
+    var pokemonList : [Pokemon] = []
 }

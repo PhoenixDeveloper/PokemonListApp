@@ -1,33 +1,26 @@
 //
-//  DetailsViewController.swift
+//  Router.swift
 //  PokemonListApp
 //
-//  Created by Михаил Беленко on 12/08/2019.
+//  Created by Михаил Беленко on 15/08/2019.
 //  Copyright © 2019 Baltic Technology Company. All rights reserved.
 //
 
 import UIKit
-import Kingfisher
 
-class DetailsViewController: UIViewController {
+class Router: UINavigationController {
 
-    @IBOutlet weak public var imageView: UIImageView!
-    @IBOutlet weak public var labelNameView: UILabel!
-    @IBOutlet weak public var labelWeightView: UILabel!
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        let model = AppModel()
+        let view = ViewController()
+        let presenter = Presenter(view: view, model: model)
+        view.presenter = presenter
+
+        // Do any additional setup after loading the view.
     }
     
-    func viewData(name: String, weight: Int64, url: URL) {
-        labelNameView.text = name
-        labelWeightView.text = "\(weight)"
-        imageView.kf.setImage(with: url)
-    }
 
     /*
     // MARK: - Navigation
