@@ -8,7 +8,7 @@
     
     import UIKit
     import Alamofire
-    
+    import Kingfisher
     
     
     class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -17,6 +17,7 @@
         var offset = 0
         let identifire = "MyCell"
         var isDataLoading : Bool = false
+        var maxCount : Int = 1000
         public static var selectedPokemonId : Int = 0
         
         override func viewDidLoad() {
@@ -34,7 +35,7 @@
                     isDataLoading = false
                     return
                 }
-                if offset != 980 { // more items to fetch
+                if offset != (maxCount-(maxCount % 20)+20) { // more items to fetch
                     offset += 20
                 }
                 else {
@@ -61,6 +62,11 @@
                             print("Невозможно создать список покемонов")
                             self!.isDataLoading = false
                             return
+                    }
+                    
+                    if let count = json["count"] as? Int
+                    {
+                        self!.maxCount = count
                     }
                     
                     for pokemon in bufferPokemonList {
@@ -157,9 +163,9 @@
             let cell = tableView.dequeueReusableCell(withIdentifier: identifire, for: indexPath)
             
             cell.textLabel?.text = "\(AppModel.pokemonList[indexPath.row].name)"
-            if let data = try? Data(contentsOf: URL(string: AppModel.pokemonList[indexPath.row].urlSprite)!)
-            {
-                cell.imageView?.image = UIImage(data: data)
+            let url = URL(string: AppModel.pokemonList[indexPath.row].urlSprite)
+            cell.imageView!.kf.setImage(with: url) { result in
+                self.updateTable()
             }
             cell.accessoryType = .disclosureIndicator
             

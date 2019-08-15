@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailsViewController: UIViewController {
 
@@ -27,10 +28,8 @@ class DetailsViewController: UIViewController {
         
         labelNameView.text = AppModel.pokemonList[ViewController.selectedPokemonId].name
         labelWeightView.text = "\(AppModel.pokemonList[ViewController.selectedPokemonId].weight)"
-        if let data = try? Data(contentsOf: URL(string: AppModel.pokemonList[ViewController.selectedPokemonId].urlSprite)!)
-        {
-            imageView.image = UIImage(data: data)
-        }
+        let url = URL(string: AppModel.pokemonList[ViewController.selectedPokemonId].urlSprite)
+        imageView.kf.setImage(with: url)
     }
 
     /*
