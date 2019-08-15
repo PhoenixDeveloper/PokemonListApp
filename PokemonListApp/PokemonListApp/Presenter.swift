@@ -13,6 +13,7 @@ class Presenter: ViewPresenter {
     
     unowned let view: PokemonView
     var model : AppModel
+    var indexDetails: Int = 0
 
     var offset = 0
     var isDataLoading : Bool = false
@@ -44,11 +45,17 @@ class Presenter: ViewPresenter {
     }
     
     func openDetails(index: Int, storyboard: UIStoryboard, navigationController: UINavigationController) {
-        let vc = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
+        let vcDetails = storyboard.instantiateViewController(withIdentifier: "DetailsViewController") as! DetailsViewController
         
-        vc.viewData(name: model.pokemonList[index].name, weight: model.pokemonList[index].weight, url: URL.init(string: model.pokemonList[index].urlSprite)!)
+        indexDetails = index
         
-        navigationController.pushViewController(vc, animated: true)
+        navigationController.pushViewController(vcDetails, animated: true)
+        
+        vcDetails.initPresenter(presenter: self)
+    }
+    
+    func loadDetails(view: DetailsViewController) {
+        view.viewData(name: model.pokemonList[indexDetails].name, weight: model.pokemonList[indexDetails].weight, url: URL.init(string: model.pokemonList[indexDetails].urlSprite)!)
     }
     
     func loadData() {

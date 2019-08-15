@@ -15,18 +15,26 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak public var labelNameView: UILabel!
     @IBOutlet weak public var labelWeightView: UILabel!
     
+    var presenter: ViewPresenter!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        presenter.loadDetails(view: self)
     }
+    
+    
     
     func viewData(name: String, weight: Int64, url: URL) {
         labelNameView.text = name
         labelWeightView.text = "\(weight)"
         imageView.kf.setImage(with: url)
+    }
+    
+    func initPresenter(presenter: ViewPresenter)
+    {
+        self.presenter = presenter
     }
 
     /*
