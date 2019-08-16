@@ -19,7 +19,6 @@
         override func viewDidLoad() {
             super.viewDidLoad()
             
-            view.translatesAutoresizingMaskIntoConstraints = false
             presenter = Presenter(view: self, model: AppModel())
             createTable()
             presenter.loadData()
@@ -70,7 +69,7 @@
             return 100.0
         }
         
-        /*func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            presenter.openDetails(index: indexPath.row, storyboard: storyboard!, navigationController: navigationController!)
-        }*/
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            presenter.openDetails(index: indexPath.row, navigationController: navigationController!)
+        }
     }

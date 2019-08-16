@@ -23,6 +23,8 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor.white
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         labelWeightView.translatesAutoresizingMaskIntoConstraints = false
         labelWeightTitle.translatesAutoresizingMaskIntoConstraints = false

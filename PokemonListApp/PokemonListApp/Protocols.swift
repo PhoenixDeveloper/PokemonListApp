@@ -17,8 +17,7 @@ protocol PokemonView: class {
 protocol ViewPresenter {
     init(view: PokemonView, model: AppModel)
     func loadData()
-    func openDetails(index: Int, storyboard: UIStoryboard, navigationController: UINavigationController)
-    func loadDetails(view: DetailsViewController)
+    func openDetails(index: Int, navigationController: UINavigationController)
     func countArray() -> Int
     func getName(index: Int) -> String
     func getWeight(index: Int) -> Int64
