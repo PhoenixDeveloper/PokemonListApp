@@ -8,6 +8,7 @@
     
     import UIKit
     import Kingfisher
+    import Foundation
     
     
     class ViewController: UIViewController, PokemonView, UITableViewDelegate, UITableViewDataSource {
@@ -22,6 +23,7 @@
             presenter = Presenter(view: self, model: AppModel())
             createTable()
             presenter.loadData()
+            _ = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(ViewController.updateTable), userInfo: nil, repeats: true)
         }
         
         func createTable() {
@@ -37,7 +39,7 @@
             }
         }
         
-        func updateTable() {
+        @objc func updateTable() {
             DispatchQueue.main.async {
                 self.pokemonListTableView.reloadData()
             }
@@ -52,9 +54,7 @@
             let cell = tableView.dequeueReusableCell(withIdentifier: identifire, for: indexPath)
             
             cell.textLabel?.text = "\(presenter.getName(index: indexPath.row))"
-            cell.imageView!.kf.setImage(with: presenter.getSpriteURL(index: indexPath.row)) { result in
-                self.updateTable()
-            }
+            cell.imageView?.kf.setImage(with: presenter.getSpriteURL(index: indexPath.row))
             cell.accessoryType = .disclosureIndicator
             
             if indexPath.row == presenter.countArray() - 1 { // last cell
