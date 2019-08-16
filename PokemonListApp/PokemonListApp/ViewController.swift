@@ -19,13 +19,13 @@
         override func viewDidLoad() {
             super.viewDidLoad()
             
+            view.translatesAutoresizingMaskIntoConstraints = false
             presenter = Presenter(view: self, model: AppModel())
             createTable()
             presenter.loadData()
         }
         
         func createTable() {
-            
             DispatchQueue.main.async {
                 self.pokemonListTableView = UITableView(frame: self.view.bounds, style: .plain)
                 self.pokemonListTableView.register(UITableViewCell.self, forCellReuseIdentifier: self.identifire)
@@ -70,7 +70,7 @@
             return 100.0
         }
         
-        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        /*func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             presenter.openDetails(index: indexPath.row, storyboard: storyboard!, navigationController: navigationController!)
-        }
+        }*/
     }

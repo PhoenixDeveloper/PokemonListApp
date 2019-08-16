@@ -33,59 +33,9 @@
                     <view key="view" contentMode="scaleToFill" id="GpR-Ba-iKo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zZF-AK-22r">
-                                <rect key="frame" x="20" y="104" width="374" height="307"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zlR-U7-Ghu">
-                                <rect key="frame" x="20" y="418.5" width="147" height="59"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="50"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weight:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ewn-RP-iZz">
-                                <rect key="frame" x="20" y="551.5" width="168" height="59"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="50"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LabelName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="sSj-5c-E0Z">
-                                <rect key="frame" x="79.5" y="485" width="255" height="59"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="50"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LabelWeight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25" translatesAutoresizingMaskIntoConstraints="NO" id="0dt-OA-7bf">
-                                <rect key="frame" x="69" y="618" width="276" height="59"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="50"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="zlR-U7-Ghu" firstAttribute="centerY" secondItem="GpR-Ba-iKo" secondAttribute="centerY" id="1PL-c0-QUE"/>
-                            <constraint firstItem="sSj-5c-E0Z" firstAttribute="centerX" secondItem="GpR-Ba-iKo" secondAttribute="centerX" id="2El-yu-jga"/>
-                            <constraint firstItem="0dt-OA-7bf" firstAttribute="centerX" secondItem="GpR-Ba-iKo" secondAttribute="centerX" id="6pK-mQ-gyB"/>
-                            <constraint firstItem="zZF-AK-22r" firstAttribute="top" secondItem="zD3-gN-VEt" secondAttribute="top" constant="60" id="Cpq-c0-2xB"/>
-                            <constraint firstItem="zlR-U7-Ghu" firstAttribute="top" secondItem="zZF-AK-22r" secondAttribute="bottom" constant="7.5" id="EXH-OQ-12K"/>
-                            <constraint firstItem="zD3-gN-VEt" firstAttribute="trailing" secondItem="zZF-AK-22r" secondAttribute="trailing" constant="20" id="O77-91-J89"/>
-                            <constraint firstItem="zZF-AK-22r" firstAttribute="top" secondItem="zD3-gN-VEt" secondAttribute="top" constant="60" id="OSW-Pf-dsk"/>
-                            <constraint firstItem="0dt-OA-7bf" firstAttribute="top" secondItem="ewn-RP-iZz" secondAttribute="bottom" constant="7.5" id="OX3-fm-QhY"/>
-                            <constraint firstItem="ewn-RP-iZz" firstAttribute="top" secondItem="sSj-5c-E0Z" secondAttribute="bottom" constant="7.5" id="UOy-kN-7hj"/>
-                            <constraint firstItem="zZF-AK-22r" firstAttribute="leading" secondItem="zD3-gN-VEt" secondAttribute="leading" constant="20" id="XVK-g2-vAA"/>
-                            <constraint firstItem="ewn-RP-iZz" firstAttribute="leading" secondItem="zD3-gN-VEt" secondAttribute="leading" constant="20" id="YVa-mx-zjZ"/>
-                            <constraint firstItem="zlR-U7-Ghu" firstAttribute="leading" secondItem="zD3-gN-VEt" secondAttribute="leading" constant="20" id="lsZ-jc-od0"/>
-                            <constraint firstItem="zZF-AK-22r" firstAttribute="leading" secondItem="zD3-gN-VEt" secondAttribute="leading" constant="20" id="mZh-gN-3X7"/>
-                            <constraint firstItem="sSj-5c-E0Z" firstAttribute="top" secondItem="zlR-U7-Ghu" secondAttribute="bottom" constant="7.5" id="n4W-Ja-g5d"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zD3-gN-VEt"/>
                     </view>
-                    <connections>
-                        <outlet property="imageView" destination="zZF-AK-22r" id="jbF-zf-3Uo"/>
-                        <outlet property="labelNameView" destination="sSj-5c-E0Z" id="FHq-hF-H7e"/>
-                        <outlet property="labelWeightView" destination="0dt-OA-7bf" id="REv-Md-pKL"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="89b-h7-enY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

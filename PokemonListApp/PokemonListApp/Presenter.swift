@@ -51,7 +51,7 @@ class Presenter: ViewPresenter {
         
         navigationController.pushViewController(vcDetails, animated: true)
         
-        vcDetails.initPresenter(presenter: self)
+        vcDetails.viewData(name: model.pokemonList[index].name, weight: model.pokemonList[index].weight, url: URL.init(string: model.pokemonList[index].urlSprite)!)
     }
     
     func loadDetails(view: DetailsViewController) {

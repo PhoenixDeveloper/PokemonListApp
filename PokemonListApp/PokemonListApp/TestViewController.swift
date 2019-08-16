@@ -1,33 +1,34 @@
 //
-//  DetailsViewController.swift
+//  TestViewController.swift
 //  PokemonListApp
 //
-//  Created by Михаил Беленко on 12/08/2019.
+//  Created by Михаил Беленко on 16/08/2019.
 //  Copyright © 2019 Baltic Technology Company. All rights reserved.
 //
 
 import UIKit
 import Kingfisher
 
-class DetailsViewController: UIViewController {
-
+class TestViewController: UIViewController {
+    
     let imageView = UIImageView(frame: CGRect(x: 20, y: 100, width: 375, height: 300))
     let labelNameTitle = UILabel(frame: CGRect(x: 20, y: 420, width: 150, height: 60))
     let labelNameView = UILabel(frame: CGRect(x: 80, y: 485, width: 255, height: 60))
     let labelWeightTitle = UILabel(frame: CGRect(x: 20, y: 550, width: 170, height: 60))
     let labelWeightView = UILabel(frame: CGRect(x: 70, y: 620, width: 280, height: 60))
     
-    var presenter: ViewPresenter!
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         labelWeightView.translatesAutoresizingMaskIntoConstraints = false
         labelWeightTitle.translatesAutoresizingMaskIntoConstraints = false
         labelNameView.translatesAutoresizingMaskIntoConstraints = false
         labelNameTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        imageView.kf.setImage(with: URL(string: "https://doc.louisiana.gov/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png")!)
         
         view.addSubview(imageView)
         
@@ -35,6 +36,7 @@ class DetailsViewController: UIViewController {
         labelNameTitle.font = UIFont(name: "Helvetica Neue", size: 50)
         view.addSubview(labelNameTitle)
         
+        labelNameView.text = "XXX"
         labelNameView.font = UIFont(name: "Helvetica Neue", size: 50)
         view.addSubview(labelNameView)
         
@@ -42,6 +44,7 @@ class DetailsViewController: UIViewController {
         labelWeightTitle.font = UIFont(name: "Helvetica Neue", size: 50)
         view.addSubview(labelWeightTitle)
         
+        labelWeightView.text = "XXX"
         labelWeightView.font = UIFont(name: "Helvetica Neue", size: 50)
         view.addSubview(labelWeightView)
         
@@ -51,20 +54,7 @@ class DetailsViewController: UIViewController {
         createLabelWeightTitleConstraints()
         createLabelWeightViewConstraints()
 
-        //presenter.loadDetails(view: self)
-    }
-    
-    
-    
-    func viewData(name: String, weight: Int64, url: URL) {
-        labelNameView.text = name
-        labelWeightView.text = "\(weight)"
-        imageView.kf.setImage(with: url)
-    }
-    
-    func initPresenter(presenter: ViewPresenter)
-    {
-        self.presenter = presenter
+        // Do any additional setup after loading the view.
     }
     
     func createImageViewConstraints() {
@@ -97,6 +87,7 @@ class DetailsViewController: UIViewController {
         labelWeightView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         labelWeightView.topAnchor.constraint(equalTo: labelWeightTitle.bottomAnchor, constant: 7.5).isActive = true
     }
+    
 
     /*
     // MARK: - Navigation
