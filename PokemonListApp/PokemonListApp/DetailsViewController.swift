@@ -17,8 +17,6 @@ class DetailsViewController: UIViewController {
     let labelWeightTitle = UILabel(frame: CGRect(x: 20, y: 550, width: 170, height: 60))
     let labelWeightView = UILabel(frame: CGRect(x: 70, y: 620, width: 280, height: 60))
     
-    var presenter: ViewPresenter!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,8 +50,6 @@ class DetailsViewController: UIViewController {
         createLabelNameViewConstraints()
         createLabelWeightTitleConstraints()
         createLabelWeightViewConstraints()
-
-        //presenter.loadDetails(view: self)
     }
     
     
@@ -62,11 +58,6 @@ class DetailsViewController: UIViewController {
         labelNameView.text = name
         labelWeightView.text = "\(weight)"
         imageView.kf.setImage(with: url)
-    }
-    
-    func initPresenter(presenter: ViewPresenter)
-    {
-        self.presenter = presenter
     }
     
     func createImageViewConstraints() {
