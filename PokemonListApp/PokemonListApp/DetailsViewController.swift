@@ -11,11 +11,11 @@ import Kingfisher
 
 class DetailsViewController: UIViewController {
 
-    let imageView = UIImageView(frame: CGRect(x: 20, y: 100, width: 375, height: 300))
-    let labelNameTitle = UILabel(frame: CGRect(x: 20, y: 420, width: 150, height: 60))
-    let labelNameView = UILabel(frame: CGRect(x: 80, y: 485, width: 255, height: 60))
-    let labelWeightTitle = UILabel(frame: CGRect(x: 20, y: 550, width: 170, height: 60))
-    let labelWeightView = UILabel(frame: CGRect(x: 70, y: 620, width: 280, height: 60))
+    let imageView = UIImageView()
+    let labelNameTitle = UILabel()
+    let labelNameView = UILabel()
+    let labelWeightTitle = UILabel()
+    let labelWeightView = UILabel()
     
     
     override func viewDidLoad() {

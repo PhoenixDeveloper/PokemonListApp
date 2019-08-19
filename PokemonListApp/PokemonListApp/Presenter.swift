@@ -13,7 +13,7 @@ class Presenter: ViewPresenter {
     
     unowned let view: PokemonView
     var model : AppModel
-
+    
     var offset = 0
     var isDataLoading : Bool = false
     var maxCount : Int = 1000
@@ -60,7 +60,7 @@ class Presenter: ViewPresenter {
                 isDataLoading = false
                 return
             }
-            if offset != (maxCount-(maxCount % 20)+20) { // more items to fetch
+            if offset != (maxCount-(maxCount % 20) + 20) { // more items to fetch
                 offset += 20
             }
             else {
@@ -141,9 +141,9 @@ class Presenter: ViewPresenter {
                         
                         // Debug-инструмент для отслеживания загрузки покемонов
                         print("\(self!.model.pokemonList.count) / \((self!.offset-20)+bufferPokemonList.count)")
+                        self!.view.updatePokemonList(pokemonInput: Pokemon(name: (pokemon["name"] as! String), urlSprite: urlSprite, weight: weight, id: id_pokemon))
                         
                         if ((self!.model.pokemonList.count) == ((self!.offset-20)+bufferPokemonList.count)) {
-                            self!.view.updateTable()
                             self!.isDataLoading = false
                         }
                         

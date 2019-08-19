@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 protocol PokemonView: class {
-    func createTable()
-    func updateTable()
+    func updatePokemonList(pokemonListInput: [Pokemon])
+    func updatePokemonList(pokemonInput: Pokemon)
 }
 
 protocol ViewPresenter {
